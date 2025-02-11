@@ -1,19 +1,22 @@
-# 02_run_simulation.py
-
-# Import required libraries
 import csv
 
-# Load trials from the generated CSV file
+total_awakenings = 0
+heads_awakenings = 0
+tails_awakenings = 0
 
-# Initialize counters for different scenarios:
-#   - Total awakenings
-#   - Awakening when coin is Heads
-#   - Awakening when coin is Tails
+with open("outputs/results.csv", "r") as f:
+    reader = csv.DictReader(f)
+    for row in reader:
+        total_awakenings += 1
+        if row["Coin_Flip"] == "Heads":
+            heads_awakenings += 1
+        else:
+            tails_awakenings += 1
 
-# Loop through trials:
-#   - Count how often Sleeping Beauty wakes up
-#   - Count how often each coin flip occurs
+prob_heads = heads_awakenings / total_awakenings
 
-# Compute the empirical probability that the coin landed on Heads when she is asked
-
-# Save results to a new CSV file
+with open("outputs/summary.txt", "w") as f:
+    f.write(f"Total awakenings: {total_awakenings}\n")
+    f.write(f"Awakenings with Heads: {heads_awakenings}\n")
+    f.write(f"Awakenings with Tails: {tails_awakenings}\n")
+    f.write(f"Empirical probability of Heads given awakening: {prob_heads:.4f}\n")
