@@ -1,10 +1,17 @@
-# 04_visualize_results.py
-
-# Import required libraries
 import matplotlib.pyplot as plt
 
-# Load summary statistics
+# Read data from summary.txt
+with open("outputs/summary.txt", "r") as f:
+    lines = f.readlines()
+    awakenings_heads = int(lines[1].split(":")[1])
+    awakenings_tails = int(lines[2].split(":")[1])
 
-# Create a bar chart showing the number of awakenings for Heads and Tails
+labels = ["Heads", "Tails"]
+values = [awakenings_heads, awakenings_tails]
 
-# Save the visualization as an image file
+plt.bar(labels, values, color=["blue", "red"])
+plt.xlabel("Coin Flip Outcome")
+plt.ylabel("Number of Awakenings")
+plt.title("Sleeping Beauty Awakening Counts")
+plt.savefig("outputs/plots/awakening_counts.png")
+plt.show()
