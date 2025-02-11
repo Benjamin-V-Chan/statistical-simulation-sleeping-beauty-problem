@@ -1,19 +1,21 @@
-# 01_generate_trials.py
-
-# Import necessary libraries
 import json
 import csv
 import random
 
-# Load configuration settings from config.json
-# Read the number of trials
+# Load configuration settings
+with open("config.json", "r") as f:
+    config = json.load(f)
 
-# Create a list to store trial outcomes
-# For each trial:
-#   - Flip a fair coin (Heads or Tails)
-#   - Determine wake-up schedule based on coin flip:
-#     - Heads: Wake on Monday only
-#     - Tails: Wake on Monday and Tuesday
-#   - Store the trial outcome (trial ID, coin flip result, wake-up days)
+num_trials = config["num_trials"]
 
-# Save trials to a CSV file for later use
+trials = []
+for trial_id in range(num_trials):
+    coin_flip = random.choice(["Heads", "Tails"])
+    wake_days = ["Monday"] if coin_flip == "Heads" else ["Monday", "Tuesday"]
+    for wake_day in wake_days:
+        trials.append([trial_id, coin_flip, wake_day])
+
+with open("outputs/results.csv", "w", newline="") as f:
+    writer = csv.writer(f)
+    writer.writerow(["Trial_ID", "Coin_Flip", "Wake_Day"])
+    writer.writerows(trials)
