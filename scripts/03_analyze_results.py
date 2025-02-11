@@ -1,15 +1,12 @@
-# 03_analyze_results.py
-
-# Import required libraries
 import json
 
-# Define known probabilities:
-#   - P(Heads) = 0.5
-#   - P(Tails) = 0.5
-#   - P(Awakening | Heads) = 1
-#   - P(Awakening | Tails) = 2
+p_heads = 0.5
+p_tails = 0.5
+p_awake_given_heads = 1
+p_awake_given_tails = 2
 
-# Compute Bayesian probability of Heads given awakening
+p_awake = p_heads * p_awake_given_heads + p_tails * p_awake_given_tails
+p_heads_given_awake = (p_heads * p_awake_given_heads) / p_awake
 
-# Compare with empirical results from the simulation
-# Save Bayesian analysis to the summary file
+with open("outputs/summary.txt", "a") as f:
+    f.write(f"Bayesian probability of Heads given awakening: {p_heads_given_awake:.4f}\n")
